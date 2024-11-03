@@ -1,0 +1,160 @@
+2024-11-03 17:11:20,229 - INFO - No environment configuration found.
+2024-11-03 17:11:20,233 - INFO - ManagedIdentityCredential will use IMDS
+2024-11-03 17:11:20,289 - INFO - Fetching storage accounts and encryption status...
+2024-11-03 17:11:20,409 - INFO - Request URL: 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=REDACTED&resource=REDACTED'
+Request method: 'GET'
+Request headers:
+    'User-Agent': 'azsdk-python-identity/1.19.0 Python/3.13.0 (macOS-15.0.1-arm64-arm-64bit-Mach-O)'
+No body was attached to the request
+2024-11-03 17:11:22,225 - INFO - DefaultAzureCredential acquired a token from AzureCliCredential
+2024-11-03 17:11:22,226 - INFO - Request URL: 'https://management.azure.com/subscriptions/2cb86829-7581-47ce-8198-a721136e4134/providers/Microsoft.Storage/storageAccounts?api-version=REDACTED'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '43726d94-99fe-11ef-b10d-f63848cd994c'
+    'User-Agent': 'azsdk-python-azure-mgmt-storage/21.2.1 Python/3.13.0 (macOS-15.0.1-arm64-arm-64bit-Mach-O)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-03 17:11:22,689 - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Pragma': 'no-cache'
+    'Content-Length': '12'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Expires': '-1'
+    'x-ms-ratelimit-remaining-subscription-reads': '249'
+    'x-ms-ratelimit-remaining-subscription-global-reads': 'REDACTED'
+    'x-ms-request-id': '6bc9d720-6855-4647-b45c-b4393b58c68d'
+    'x-ms-correlation-request-id': 'REDACTED'
+    'x-ms-routing-request-id': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'X-MSEdge-Ref': 'Ref A: AEC42E34DA8C4094B7E56F2CA5F385B9 Ref B: AMS231032607017 Ref C: 2024-11-03T16:11:22Z'
+    'Date': 'Sun, 03 Nov 2024 16:11:22 GMT'
+2024-11-03 17:11:22,690 - INFO - Scanning VM disks...
+2024-11-03 17:11:23,066 - INFO - AzureCliCredential.get_token_info succeeded
+2024-11-03 17:11:23,066 - INFO - DefaultAzureCredential acquired a token from AzureCliCredential
+2024-11-03 17:11:23,067 - INFO - Request URL: 'https://management.azure.com/subscriptions/2cb86829-7581-47ce-8198-a721136e4134/providers/Microsoft.Compute/virtualMachines?api-version=REDACTED'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '44e7ac66-99fe-11ef-b10d-f63848cd994c'
+    'User-Agent': 'azsdk-python-azure-mgmt-compute/33.0.0 Python/3.13.0 (macOS-15.0.1-arm64-arm-64bit-Mach-O)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-03 17:11:23,630 - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Pragma': 'no-cache'
+    'Content-Length': '7536'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Expires': '-1'
+    'x-ms-original-request-ids': 'REDACTED'
+    'x-ms-ratelimit-remaining-subscription-reads': '249'
+    'x-ms-ratelimit-remaining-subscription-global-reads': 'REDACTED'
+    'x-ms-request-id': '77b738a9-031a-4ddf-809e-6d4f61eecefc'
+    'x-ms-correlation-request-id': 'REDACTED'
+    'x-ms-routing-request-id': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'X-MSEdge-Ref': 'Ref A: 8F5DC5574D52480CB1CF070A0092366D Ref B: AMS231020615021 Ref C: 2024-11-03T16:11:23Z'
+    'Date': 'Sun, 03 Nov 2024 16:11:23 GMT'
+2024-11-03 17:11:23,636 - INFO - Request URL: 'https://management.azure.com/subscriptions/2cb86829-7581-47ce-8198-a721136e4134/resourceGroups/PROJECT/providers/Microsoft.Compute/virtualMachines/VM-EUR-NOR?$expand=REDACTED&api-version=REDACTED'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '455ee48e-99fe-11ef-b10d-f63848cd994c'
+    'User-Agent': 'azsdk-python-azure-mgmt-compute/33.0.0 Python/3.13.0 (macOS-15.0.1-arm64-arm-64bit-Mach-O)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-03 17:11:23,783 - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Pragma': 'no-cache'
+    'Content-Length': '4008'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Expires': '-1'
+    'x-ms-ratelimit-remaining-resource': 'Microsoft.Compute/LowCostGetSubscriptionMaximum;23998,Microsoft.Compute/LowCostGetResource;34'
+    'x-ms-need-to-refresh-epl-cache': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'x-ms-request-id': 'a11dc434-7ad9-41b8-9a46-407a1214cd3a'
+    'x-ms-ratelimit-remaining-subscription-reads': '249'
+    'x-ms-ratelimit-remaining-subscription-global-reads': 'REDACTED'
+    'x-ms-correlation-request-id': 'REDACTED'
+    'x-ms-routing-request-id': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'X-MSEdge-Ref': 'Ref A: 0D0A9E82EE2643B2A47D34BBBDF86595 Ref B: AMS231020615021 Ref C: 2024-11-03T16:11:23Z'
+    'Date': 'Sun, 03 Nov 2024 16:11:23 GMT'
+2024-11-03 17:11:23,786 - INFO - VM: VM-EUR-NOR, OS Disk: VM-EUR-NOR_disk1_b7c2be4847584d8d9589501bb2d76eb2, Encryption: False
+2024-11-03 17:11:23,787 - WARNING - Primary Violation for VM-EUR-NOR_disk1_b7c2be4847584d8d9589501bb2d76eb2
+2024-11-03 17:11:23,787 - INFO - Inserting volume: VM-EUR-NOR_disk1_b7c2be4847584d8d9589501bb2d76eb2, Encrypted: False, Violation: Primary
+2024-11-03 17:11:23,790 - INFO - Request URL: 'https://management.azure.com/subscriptions/2cb86829-7581-47ce-8198-a721136e4134/resourceGroups/PROJECT/providers/Microsoft.Compute/virtualMachines/VM-IND-CEN?$expand=REDACTED&api-version=REDACTED'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '45766d48-99fe-11ef-b10d-f63848cd994c'
+    'User-Agent': 'azsdk-python-azure-mgmt-compute/33.0.0 Python/3.13.0 (macOS-15.0.1-arm64-arm-64bit-Mach-O)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-03 17:11:24,174 - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Pragma': 'no-cache'
+    'Content-Length': '4605'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Expires': '-1'
+    'x-ms-ratelimit-remaining-resource': 'Microsoft.Compute/LowCostGetSubscriptionMaximum;23999,Microsoft.Compute/LowCostGetResource;35'
+    'x-ms-need-to-refresh-epl-cache': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'x-ms-request-id': '74719171-5dfa-4a53-8ac2-e5e4438ebb4e'
+    'x-ms-ratelimit-remaining-subscription-reads': '249'
+    'x-ms-ratelimit-remaining-subscription-global-reads': 'REDACTED'
+    'x-ms-correlation-request-id': 'REDACTED'
+    'x-ms-routing-request-id': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'X-MSEdge-Ref': 'Ref A: 9D32BCDAD6A24D29AB1767B7D7D7E4C7 Ref B: AMS231020615021 Ref C: 2024-11-03T16:11:23Z'
+    'Date': 'Sun, 03 Nov 2024 16:11:23 GMT'
+2024-11-03 17:11:24,177 - INFO - VM: VM-IND-CEN, OS Disk: VM-IND-CEN_OsDisk_1_cbbde90d1c32484db4e6a0d8abf56423, Encryption: False
+2024-11-03 17:11:24,177 - WARNING - Primary Violation for VM-IND-CEN_OsDisk_1_cbbde90d1c32484db4e6a0d8abf56423
+2024-11-03 17:11:24,177 - INFO - Inserting volume: VM-IND-CEN_OsDisk_1_cbbde90d1c32484db4e6a0d8abf56423, Encrypted: False, Violation: Primary
+2024-11-03 17:11:24,180 - INFO - Request URL: 'https://management.azure.com/subscriptions/2cb86829-7581-47ce-8198-a721136e4134/resourceGroups/PROJECT/providers/Microsoft.Compute/virtualMachines/vm-usa-wst?$expand=REDACTED&api-version=REDACTED'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '45b1e3fa-99fe-11ef-b10d-f63848cd994c'
+    'User-Agent': 'azsdk-python-azure-mgmt-compute/33.0.0 Python/3.13.0 (macOS-15.0.1-arm64-arm-64bit-Mach-O)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2024-11-03 17:11:24,477 - INFO - Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Pragma': 'no-cache'
+    'Content-Length': '4005'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Expires': '-1'
+    'x-ms-ratelimit-remaining-resource': 'Microsoft.Compute/LowCostGetSubscriptionMaximum;23999,Microsoft.Compute/LowCostGetResource;35'
+    'x-ms-need-to-refresh-epl-cache': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'x-ms-request-id': '757a9830-3770-4119-a056-6f0a9a49406b'
+    'x-ms-ratelimit-remaining-subscription-reads': '249'
+    'x-ms-ratelimit-remaining-subscription-global-reads': 'REDACTED'
+    'x-ms-correlation-request-id': 'REDACTED'
+    'x-ms-routing-request-id': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'X-Cache': 'REDACTED'
+    'X-MSEdge-Ref': 'Ref A: 66313B9CB0FF40C097ADC1260B8FD74C Ref B: AMS231020615021 Ref C: 2024-11-03T16:11:24Z'
+    'Date': 'Sun, 03 Nov 2024 16:11:24 GMT'
+2024-11-03 17:11:24,480 - INFO - VM: vm-usa-wst, OS Disk: vm-usa-wst_OsDisk_1_339c3f6c761d451ead415c7bdf03f7ac, Encryption: False
+2024-11-03 17:11:24,481 - WARNING - Primary Violation for vm-usa-wst_OsDisk_1_339c3f6c761d451ead415c7bdf03f7ac
+2024-11-03 17:11:24,481 - INFO - Inserting volume: vm-usa-wst_OsDisk_1_339c3f6c761d451ead415c7bdf03f7ac, Encrypted: False, Violation: Primary
+2024-11-03 17:11:25,161 - INFO - Summary Report:
+volume_type  count  encrypted_count
+    OS Disk      3                0
+2024-11-03 17:11:25,162 - INFO - Violation History Report:
+Empty DataFrame
+Columns: [volume_type, violation_type, violation_count]
+Index: []

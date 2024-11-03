@@ -1,0 +1,6 @@
+.azure
+.venv
+.env
+*.db
+*.log
+test.py
