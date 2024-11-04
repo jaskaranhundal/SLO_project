@@ -12,7 +12,7 @@ import logging
 
 # Configure logging
 logging.basicConfig(filename='uptime_slo.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
+logging.info(f'Script start @ {datetime.now()}')
 # Initialize the database and create necessary tables
 def init_db():
     conn = sqlite3.connect('monitoring.db')
@@ -209,4 +209,4 @@ if __name__ == '__main__':
     while True:
         run_monitoring()
 
-        time.sleep(5)  # Adjust the sleep duration as necessary
+        time.sleep(1)  # Adjust the sleep duration as necessary

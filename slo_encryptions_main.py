@@ -17,6 +17,9 @@ load_dotenv()
 logging.basicConfig(filename='encryption_slo.log', level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
+
+
+logging.info(f'Script start @ {datetime.datetime.now()}')
 # SQLite3 connection
 db_path = os.getenv("DATABASE_URL", "monitoring.db")  # Path to SQLite database
 conn = sqlite3.connect(db_path)
@@ -292,7 +295,7 @@ if __name__ == "__main__":
             generate_report()
 
             # Sleep for 10 seconds before next iteration
-            time.sleep(600)
+            time.sleep(3600)
 
     finally:
         conn.close()  # Close the database connection when done

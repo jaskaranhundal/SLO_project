@@ -6,6 +6,7 @@ import requests
 import sqlite3
 from collections import Counter
 from urllib.parse import urlparse
+from datetime import datetime
 
 # Configure logging
 logging.basicConfig(filename='http_header_slo.log',
@@ -15,7 +16,7 @@ logging.basicConfig(filename='http_header_slo.log',
 SSL_LABS_API = "https://api.ssllabs.com/api/v3/analyze"
 trust_grade = ['A', 'A+']
 
-
+logging.info(f'Script start @ {datetime.now()}')
 # Initialize database and create the updated table schema
 def initialize_db():
     conn = sqlite3.connect('monitoring.db')
@@ -319,7 +320,7 @@ def check_security_headers():
 
                 logging.error(f"Error checking headers for {url}: {e}")
 
-            time.sleep(2)  # Repeat every 2 seconds
+            time.sleep(1)  # Repeat every 2 seconds
 
 
 def getParts(url_string):
@@ -392,7 +393,7 @@ def check_ssl_scores():
                 logging.error(f"Error accessing SSL Labs API for {url}: {e}")
                 ssl_results[url] = {f"Error accessing SSL Labs API for {url}: {e}"}
 
-            time.sleep(10)  # Run every 10 seconds
+            time.sleep(1800)  # Run every 10 seconds
 
 
 # Main function to manage processes and run both tasks concurrently

@@ -2,7 +2,8 @@ import os
 import time
 import sqlite3
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta , timezone
+
 from azure.core.exceptions import ResourceNotFoundError, HttpResponseError
 from azure.identity import DefaultAzureCredential
 from azure.monitor.query import LogsQueryClient
@@ -19,7 +20,7 @@ logging.basicConfig(
         logging.FileHandler("waf_slo.log"),  # Logs only to a file
     ]
 )
-
+logging.info(f'Script start @ {datetime.now()}')
 # Azure setup
 credential = DefaultAzureCredential()
 client = LogsQueryClient(credential)
@@ -45,8 +46,8 @@ def fetch_and_store_logs():
     try:
         logging.info("Starting log fetch and store operation.")
 
-        end_time = datetime.now()
-        start_time = end_time - timedelta(minutes=1440)
+        end_time = datetime.now(timezone.utc)
+        start_time = end_time - timedelta(minutes=5)
         #logging.debug(f"Fetching logs from {start_time} to {end_time}.")
 
         query_result = client.query_workspace(

@@ -1,5 +1,6 @@
 import sqlite3
 import logging
+import time
 from asyncio import timeout
 from datetime import datetime, timedelta
 from fileinput import filename
@@ -20,6 +21,7 @@ def process_sample_data():
         # Perform daily additional violation scan
         daily_additional_violation_scan(c)
         conn.commit()
+    time.sleep(5)
 def convert_seconds(seconds):
     days = seconds // 86400
     hours = (seconds % 86400) // 3600
@@ -78,51 +80,52 @@ def daily_additional_violation_scan(cursor):
     downtime_accumulator = {}
 
     # Calculate total downtime per component and protocol
-    for i in range(1, len(results)):
-        component_id, protocol, start_time = results[i]
-        prev_component_id, prev_protocol, prev_start_time = results[i - 1]
+    while True:
+        for i in range(1, len(results)):
+            component_id, protocol, start_time = results[i]
+            prev_component_id, prev_protocol, prev_start_time = results[i - 1]
 
-        if component_id == prev_component_id and protocol == prev_protocol:
-            # Calculate the downtime interval between consecutive Primary Violations
-            interval = (datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S") -
-                        datetime.strptime(prev_start_time, "%Y-%m-%d %H:%M:%S")).total_seconds()
+            if component_id == prev_component_id and protocol == prev_protocol:
+                # Calculate the downtime interval between consecutive Primary Violations
+                interval = (datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S") -
+                            datetime.strptime(prev_start_time, "%Y-%m-%d %H:%M:%S")).total_seconds()
 
-            # Accumulate downtime for each component and protocol
-            key = (component_id, protocol)
-            if key not in downtime_accumulator:
-                downtime_accumulator[key] = 0
-            downtime_accumulator[key] += interval
-    #print(downtime_accumulator)
+                # Accumulate downtime for each component and protocol
+                key = (component_id, protocol)
+                if key not in downtime_accumulator:
+                    downtime_accumulator[key] = 0
+                downtime_accumulator[key] += interval
+        #print(downtime_accumulator)
 
-    # Log Extended Violations for components with total downtime > 60 seconds
-    for (component_id, protocol), total_downtime in downtime_accumulator.items():
+        # Log Extended Violations for components with total downtime > 60 seconds
+        for (component_id, protocol), total_downtime in downtime_accumulator.items():
 
-        address=get_domain_ip(component_id,protocol)
+            address=get_domain_ip(component_id,protocol)
 
 
 
-        if total_downtime > 300:
-            TIME=convert_seconds(total_downtime)
-            logging.warning(
-                f"Additional violation detected: Component ID {address}, Protocol {protocol}. "
-                f"Total downtime in the last 24 hours is {TIME}."
-            )
-            # Log Extended Violation if not already logged in the last hour
-            cursor.execute("""
-                INSERT INTO Uptime_Violations (component_id, violation_type, protocol, start_time)
-                SELECT ?, 'Extended Violation', ?, ?
-                WHERE NOT EXISTS (
-                    SELECT 1 FROM Uptime_Violations
-                    WHERE component_id = ? AND protocol = ? AND violation_type = 'Extended Violation'
-                          AND start_time >= ?
+            if total_downtime > 300:
+                TIME=convert_seconds(total_downtime)
+                logging.warning(
+                    f"Additional violation detected: Component ID {address}, Protocol {protocol}. "
+                    f"Total downtime in the last 24 hours is {TIME}."
                 )
-            """, (component_id, protocol, datetime.now(), component_id, protocol, one_hour_ago))
-        print(downtime_accumulator)
-
+                # Log Extended Violation if not already logged in the last hour
+                cursor.execute("""
+                    INSERT INTO Uptime_Violations (component_id, violation_type, protocol, start_time)
+                    SELECT ?, 'Extended Violation', ?, ?
+                    WHERE NOT EXISTS (
+                        SELECT 1 FROM Uptime_Violations
+                        WHERE component_id = ? AND protocol = ? AND violation_type = 'Extended Violation'
+                              AND start_time >= ?
+                    )
+                """, (component_id, protocol, datetime.now(), component_id, protocol, one_hour_ago))
+            print(downtime_accumulator)
+        time.sleep(60*12*60)
 def hourly_extended_violation_scan(cursor):
     """Daily scan for Additional Violations - more than 3 downtimes within 1 hours."""
     twenty_four_hours_ago = datetime.now() - timedelta(hours=1)
-
+    twenty_four_hours_ago = twenty_four_hours_ago.timestamp()
     cursor.execute("""
         SELECT component_id, protocol, COUNT(*) AS violation_count
         FROM Uptime_Violations
@@ -131,37 +134,33 @@ def hourly_extended_violation_scan(cursor):
     """, (twenty_four_hours_ago,))
 
     results = cursor.fetchall()
+    while True:
+        for component_id, protocol, violation_count in results:
+            address=get_domain_ip(component_id,protocol)
 
-    for component_id, protocol, violation_count in results:
-        address=get_domain_ip(component_id,protocol)
 
-
-        if violation_count > 3:
-            logging.warning(
-                f"Extended violation detected at address {address} using protocol {protocol}. "
-                f"A total of {violation_count} primary violations occurred in the last hour."
-            )
-            # Log Additional Violation if not already logged in the last 24 hours
-            cursor.execute("""
-                INSERT INTO Uptime_Violations (component_id, violation_type, protocol, start_time)
-                SELECT ?, 'Additional Violation', ?, ?
-                WHERE NOT EXISTS (
-                    SELECT 1 FROM Uptime_Violations
-                    WHERE component_id = ? AND protocol = ? AND violation_type = 'Additional Violation'
-                          AND start_time >= ?
+            if violation_count > 3:
+                logging.warning(
+                    f"Extended violation detected at address {address} using protocol {protocol}. "
+                    f"A total of {violation_count} primary violations occurred in the last hour."
                 )
-            """, (component_id, protocol, datetime.now(), component_id, protocol, twenty_four_hours_ago))
-
+                # Log Additional Violation if not already logged in the last 24 hours
+                cursor.execute("""
+                    INSERT INTO Uptime_Violations (component_id, violation_type, protocol, start_time)
+                    SELECT ?, 'Additional Violation', ?, ?
+                    WHERE NOT EXISTS (
+                        SELECT 1 FROM Uptime_Violations
+                        WHERE component_id = ? AND protocol = ? AND violation_type = 'Additional Violation'
+                              AND start_time >= ?
+                    )
+                """, (component_id, protocol, datetime.now(), component_id, protocol, twenty_four_hours_ago))
+        time.sleep(60*60)
 
 # Run the script
 if __name__ == "__main__":
-    process_sample_data()
 
-    # View results
-    with sqlite3.connect('monitoring.db') as conn:
-        c = conn.cursor()
-        c.execute("SELECT * FROM Uptime_Violations")
-        results = c.fetchall()
-#        for row in results:
-#            print(row)
+    while True:
+        process_sample_data()
 
+
+    time.sleep(5)
