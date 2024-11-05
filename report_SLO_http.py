@@ -40,7 +40,7 @@ class PDF(FPDF):
 end_time = get_timestamp_input("Enter the end time (YYYY-MM-DD HH:MM:SS): ")'''
 # Define your time range here
 start_time = datetime.strptime('2024-11-04 13:30:00', '%Y-%m-%d %H:%M:%S')
-end_time = datetime.strptime('2024-11-04 20:00:00', '%Y-%m-%d %H:%M:%S')
+end_time = datetime.strptime('2024-11-04 18:00:00', '%Y-%m-%d %H:%M:%S')
 
 start_time_str = start_time.strftime('%Y-%m-%d %H:%M:%S')
 end_time_str = end_time.strftime('%Y-%m-%d %H:%M:%S')
@@ -75,7 +75,7 @@ if results.empty or results['total_requests'].sum() == 0:
 else:
     # Create a summary DataFrame
     summary_df = results
-    print(results)
+
 
     # Create bar chart for HTTP headers across URLs
     headers = [
@@ -160,10 +160,10 @@ else:
 
 
     # Save the PDF to a file
-    pdf_file_name = 'slo_http_header_report.pdf'
-    pdf.output(pdf_file_name)
+    pdf_file = f"SLO_Security_Headers_Report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
+    pdf.output(pdf_file)
 
     # Clean up: remove the chart image file
     os.remove(chart_file_name)
 
-    print(f"Report saved as {pdf_file_name}")
+    #print(f"Report saved as {pdf_file}")

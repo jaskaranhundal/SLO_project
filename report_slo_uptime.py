@@ -10,7 +10,7 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, 
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 
-from uptime_report import total_pings
+
 
 
 # Cleanup function to remove old images and PDF files
@@ -57,7 +57,7 @@ def plot_http_response_times(start_time, end_time, file_name):
     http_df['timestamp'] = pd.to_datetime(http_df['timestamp'])
     filtered_http_df = http_df[http_df['response_time'] > 0.0]
 
-    plt.figure(figsize=(25, 15))
+    plt.figure(figsize=(15, 8))
     for host_id, group in filtered_http_df.groupby('Host_ID'):
         group = group.sort_values('timestamp')
         num_data_points = len(group)
@@ -123,8 +123,8 @@ def plot_icmp_response_times(start_time, end_time, file_name):
 
 # Function to create a PDF report with text tables
 def create_pdf_report(start_time, end_time, http_summary, icmp_summary):
-    pdf_file_name = "Monitoring_Report.pdf"
-    doc = SimpleDocTemplate(pdf_file_name, pagesize=landscape(A4), rightMargin=20, leftMargin=20,
+    pdf_file = f"SLO_Uptime_Report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
+    doc = SimpleDocTemplate(pdf_file, pagesize=landscape(A4), rightMargin=20, leftMargin=20,
                             topMargin=20, bottomMargin=20)
 
     # Get sample styles
@@ -195,7 +195,9 @@ def create_pdf_report(start_time, end_time, http_summary, icmp_summary):
     doc.build(elements)
     files_to_cleanup = ["http_response_times.png", "icmp_response_times.png"]
     cleanup_old_files(files_to_cleanup)
-    print(f"PDF report generated: {pdf_file_name}")
+    #print(f"PDF report generated: {pdf_file_name}")
+    files_to_cleanup = ["http_response_times.png", "icmp_response_times.png"]
+    cleanup_old_files(files_to_cleanup)
 
 # Main script execution
 if __name__ == "__main__":
@@ -205,7 +207,7 @@ if __name__ == "__main__":
 
     # Define your time range here
     start_time = datetime.strptime('2024-11-04 13:30:00', '%Y-%m-%d %H:%M:%S')
-    end_time = datetime.strptime('2024-11-04 15:00:00', '%Y-%m-%d %H:%M:%S')
+    end_time = datetime.strptime('2024-11-04 18:00:00', '%Y-%m-%d %H:%M:%S')
 
     start_time_str = start_time.strftime('%Y-%m-%d %H:%M:%S')
     end_time_str = end_time.strftime('%Y-%m-%d %H:%M:%S')
@@ -246,7 +248,7 @@ if __name__ == "__main__":
                 'Min Response Time': f"{min_response:.3f}" if min_response > 0 else "N/A",
                 'Max Response Time': f"{max_response:.3f}" if max_response > 0 else "N/A",
                 'Avg Response Time': f"{avg_response:.3f}" if avg_response > 0 else "N/A",
-                'Total Pings Sent': total_requests,
+                'Total Requests Sent': total_requests,
                 'Positive Responses': positive_responses,
                 'Uptime Percentage': uptime_percentage
             })
@@ -284,7 +286,7 @@ if __name__ == "__main__":
                 'Min Response Time': f"{min_response:.3f}" if min_response > 0 else "N/A",
                 'Max Response Time': f"{max_response:.3f}" if max_response > 0 else "N/A",
                 'Avg Response Time': f"{avg_response:.3f}" if avg_response > 0 else "N/A",
-                'Total Pings Sent': total_pings,
+                'Total Pings Sent': total_requests,
                 'Positive Responses': positive_responses,
                 'Uptime Percentage': uptime_percentage
             })
